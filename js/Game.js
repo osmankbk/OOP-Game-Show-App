@@ -17,8 +17,8 @@ class Game {
 		return newPhrase;
 	}
 	handleInteraction(htmlButton) { //The Interaction method that checks to see if the letter of the button...
-	 		htmlButton = event.target;
-			if (this.activePhrase.checkLetter(htmlButton.textContent) === false) { //Clicked is in the phrase being displayed.
+		htmlButton = event.target;
+		if (this.activePhrase.checkLetter(htmlButton.textContent) === false) { //Clicked is in the phrase being displayed.
 			htmlButton.setAttribute('disabled', true); //And set its attributes accordinly, and also..
 			htmlButton.className = 'wrong';
 			this.removeLife(); //retains or remove a life,...
@@ -32,22 +32,21 @@ class Game {
 	}
 	handleKeyInteraction(htmlKey) { //This method has the exact same fuction as the handleInteraction,but for the physical Keyboard
 		htmlKey = event.key.toLowerCase();
-		let buttonPressed = 0;
 		const keys = document.querySelectorAll('#qwerty button');
 		keys.forEach(key => {
 			if (key.innerHTML === htmlKey) {
-					key.removeAttribute('disabled');
-				if (this.activePhrase.checkLetter(htmlKey) === false) {
-					key.setAttribute('class', 'wrong');
-					key.setAttribute('disabled', true);
-					this.removeLife();
-				} else {
+				if (this.activePhrase.checkLetter(htmlKey) === true) {
 					this.activePhrase.showMatchedLetter(htmlKey);
 					key.setAttribute('class', 'chosen');
-					key.setAttribute('disabled', true);
 					if (this.checkForWin() !== false) {
 						this.gameOver(true);
 					}
+				} else {
+					if (key.className === 'wrong') {
+						return false;
+					}
+					key.setAttribute('class', 'wrong');
+					this.removeLife();
 				}
 			}
 		})
