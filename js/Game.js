@@ -24,6 +24,7 @@ class Game {
 			this.removeLife(); //retains or remove a life,...
 		} else {
 			htmlButton.className = 'chosen';
+			htmlButton.setAttribute('disabled', true);
 			this.activePhrase.showMatchedLetter(htmlButton.textContent); // or displays the letter depending on whether it is or not.
 			if (this.checkForWin() !== false) { //It aslo checks if the game is won by call the checkForWin method.
 				this.gameOver(true);
@@ -81,11 +82,13 @@ class Game {
 			$('#overlay').fadeIn(1000);
 			$('#overlay').css('background-color', 'red');
 			$('#btn__reset').text('Try Again').css('color', 'red').hide().fadeIn(2000);
+			this.resetGame(); //Called the resetGame method when playing concludes.
 		} else if (gameWon === true) {
 			overlayDiv.className = 'win';
 			$('#game-over-message').text('You Win!').css('color', 'red');
 			$('#btn__reset').text('Play Again?').css('color', 'red').hide().fadeIn(2000);
 			$('#overlay').css('background-color', 'green').fadeIn(600);
+			this.resetGame(); //Called the resetGame method when playing concludes.
 		}
 	}
 	resetGame() { //This resets the game when the start button is clicked by...
