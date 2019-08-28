@@ -16,42 +16,40 @@ class Game {
 		const newPhrase = new Phrase(this.phrases[randomPhrase].phrase);
 		return newPhrase;
 	}
-	handleInteraction(htmlButton) { //The Interaction method that checks to see if the letter of the button...
-		htmlButton = event.target;
-		if (this.activePhrase.checkLetter(htmlButton.textContent) === false) { //Clicked is in the phrase being displayed.
-			htmlButton.setAttribute('disabled', true); //And set its attributes accordinly, and also..
-			htmlButton.className = 'wrong';
-			this.removeLife(); //retains or remove a life,...
-		} else {
-			htmlButton.className = 'chosen';
-			htmlButton.setAttribute('disabled', true);
-			this.activePhrase.showMatchedLetter(htmlButton.textContent); // or displays the letter depending on whether it is or not.
-			if (this.checkForWin() !== false) { //It aslo checks if the game is won by call the checkForWin method.
-				this.gameOver(true);
-			}
+	handleInteraction(button) { //The Interaction method that checks to see if the letter of the button...
+	if (this.activePhrase.checkLetter(button.textContent) === false) { //Clicked is in the phrase being displayed.
+		button.setAttribute('disabled', true); //And set its attributes accordinly, and also..
+		button.className = 'wrong';
+		this.removeLife(); //retains or remove a life,...
+	} else {
+		button.className = 'chosen';
+		button.setAttribute('disabled', true);
+		this.activePhrase.showMatchedLetter(button.textContent); // or displays the letter depending on whether it is or not.
+		if (this.checkForWin() !== false) { //It aslo checks if the game is won by call the checkForWin method.
+			this.gameOver(true);
 		}
 	}
-	handleKeyInteraction(htmlKey) { //This method has the exact same fuction as the handleInteraction,but for the physical Keyboard
-		htmlKey = event.key.toLowerCase();
-		const keys = document.querySelectorAll('#qwerty button');
-		keys.forEach(key => {
-			if (key.innerHTML === htmlKey) {
-				if (this.activePhrase.checkLetter(htmlKey) === true) {
-					this.activePhrase.showMatchedLetter(htmlKey);
-					key.setAttribute('class', 'chosen');
-					if (this.checkForWin() !== false) {
-						this.gameOver(true);
-					}
-				} else {
-					if (key.className === 'wrong') {
-						return false;
-					}
-					key.setAttribute('class', 'wrong');
-					this.removeLife();
+}
+handleKeyInteraction(button) { //This method has the exact same fuction as the handleInteraction,but for the physical Keyboard
+	const keys = document.querySelectorAll('#qwerty button');
+	keys.forEach(key => {
+		if (key.innerHTML === button) {
+			if (this.activePhrase.checkLetter(button) === true) {
+				this.activePhrase.showMatchedLetter(button);
+				key.setAttribute('class', 'chosen');
+				if (this.checkForWin() !== false) {
+					this.gameOver(true);
 				}
+			} else {
+				if (key.className === 'wrong') {
+					return false;
+				}
+				key.setAttribute('class', 'wrong');
+				this.removeLife();
 			}
-		})
-	}
+		}
+	})
+}
 	createPhrases() { //The method that creates the phrases for the game.
 		const phraseObject = [new Phrase('I Love You'), new Phrase('Change Requires Action'),
 			new Phrase('Momento Mori'), new Phrase('The Future is Architected'), new Phrase('I am Alive')
