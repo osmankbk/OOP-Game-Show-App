@@ -11,7 +11,7 @@ const button = document.querySelector('#btn__reset'); //Stored the start button 
 let game; //created an instance of the game Object, stored in a variable, to be used multiple times.
 button.addEventListener('click', (e) => { //Add an eventListener on the button that...
 	game = new Game();
-	game.startGame(); // starts a new game by call the startGame method.
+	game.startGame(); // starts a new game by calling the startGame method.
 });
 keyDiv.addEventListener('click', (e) => { //Added an eventListener on the div of the onscreen Keyboard and..
 	if (e.target.className === 'key') { // Delegated the event to its children.
