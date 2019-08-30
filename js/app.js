@@ -5,12 +5,12 @@
   */
 // Going for Exceed Expectation, if i fall short, please fail me so I can try again. Thank You.
 const keyDiv = document.querySelector('#qwerty'); //Stored the div of the keys i'll be adding an evntListener on in a variable.
+const keysInDiv = keyDiv.querySelectorAll('button'); //The individual buttons of keyDiv to be used in my keydown event.
+const divKeys = document.querySelectorAll('.key');
 const button = document.querySelector('#btn__reset'); //Stored the start button in a variable as well.
 let game; //created an instance of the game Object, stored in a variable, to be used multiple times.
-
 button.addEventListener('click', (e) => { //Add an eventListener on the button that...
 	game = new Game();
-	game.resetGame();
 	game.startGame(); // starts a new game by call the startGame method.
 });
 keyDiv.addEventListener('click', (e) => { //Added an eventListener on the div of the onscreen Keyboard and..
@@ -19,5 +19,9 @@ keyDiv.addEventListener('click', (e) => { //Added an eventListener on the div of
 	}
 });
 document.addEventListener('keydown', (e) => { // An eventListener for the physical Keyboard. It calls..
-	game.handleKeyInteraction(event.key); // The handleKeyInteraction when any of the keys is pressed.
+	keysInDiv.forEach(key => {
+		if (key.innerHTML === event.key) {
+			game.handleInteraction(key); // The handleKeyInteraction when any of the keys is pressed.
+		}
+	})
 });

@@ -17,39 +17,24 @@ class Game {
 		return newPhrase;
 	}
 	handleInteraction(button) { //The Interaction method that checks to see if the letter of the button...
-	if (this.activePhrase.checkLetter(button.textContent) === false) { //Clicked is in the phrase being displayed.
-		button.setAttribute('disabled', true); //And set its attributes accordinly, and also..
-		button.className = 'wrong';
-		this.removeLife(); //retains or remove a life,...
-	} else {
-		button.className = 'chosen';
-		button.setAttribute('disabled', true);
-		this.activePhrase.showMatchedLetter(button.textContent); // or displays the letter depending on whether it is or not.
-		if (this.checkForWin() !== false) { //It aslo checks if the game is won by call the checkForWin method.
-			this.gameOver(true);
-		}
-	}
-}
-handleKeyInteraction(button) { //This method has the exact same fuction as the handleInteraction,but for the physical Keyboard
-	const keys = document.querySelectorAll('#qwerty button');
-	keys.forEach(key => {
-		if (key.innerHTML === button) {
-			if (this.activePhrase.checkLetter(button) === true) {
-				this.activePhrase.showMatchedLetter(button);
-				key.setAttribute('class', 'chosen');
-				if (this.checkForWin() !== false) {
+		if (document.getElementById('overlay').style.display) {
+			if (this.activePhrase.checkLetter(button.textContent)) { //Clicked is in the phrase being displayed.
+				this.activePhrase.showMatchedLetter(button.textContent); // or displays the letter depending on whether it is or not.
+				button.setAttribute('disabled', true); //And set its attributes accordinly, and also..
+				button.className = 'chosen';
+				if (this.checkForWin() !== false) { //checks if the game is won by call the checkForWin method,
 					this.gameOver(true);
 				}
 			} else {
-				if (key.className === 'wrong') {
+				if (button.className === 'wrong') { // prevents and button with 'wrong' className to register when pressed and also
 					return false;
 				}
-				key.setAttribute('class', 'wrong');
-				this.removeLife();
+				button.className = 'wrong';
+				button.setAttribute('disabled', true);
+				this.removeLife(); //retains or remove a life,...
 			}
 		}
-	})
-}
+	}
 	createPhrases() { //The method that creates the phrases for the game.
 		const phraseObject = [new Phrase('I Love You'), new Phrase('Change Requires Action'),
 			new Phrase('Momento Mori'), new Phrase('The Future is Architected'), new Phrase('I am Alive')
