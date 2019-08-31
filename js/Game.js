@@ -13,7 +13,7 @@ class Game {
 	}
 	getRandomPhrase() { //This method returns a random phrase from the "this.phrases" property.
 		const randomPhrase = Math.floor(Math.random() * this.phrases.length);
-		const newPhrase = new Phrase(this.phrases[randomPhrase].phrase);
+		const newPhrase = this.phrases[randomPhrase];
 		return newPhrase;
 	}
 	handleInteraction(button) { //The Interaction method that checks to see if the letter of the button...
